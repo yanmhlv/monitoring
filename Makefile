@@ -1,9 +1,9 @@
 HOST_IP ?= $(shell ipconfig getifaddr en0)
 
-.PHONY: down
-down:
-	docker-compose down -v --remove-orphans
+.PHONY: docker-down
+docker-down:
+	HOST_IP=${HOST_IP} docker-compose down
 
-.PHONY: up
-up: down
-	HOST_IP=${HOST_IP} docker-compose up
+.PHONY: docker-up
+docker-up: docker-down
+	HOST_IP=${HOST_IP} docker-compose up -d
