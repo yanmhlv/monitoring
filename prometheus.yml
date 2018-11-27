@@ -1,0 +1,35 @@
+global:
+  scrape_interval:     5s
+  evaluation_interval: 15s
+  scrape_timeout:      5s
+
+scrape_configs:
+#   - job_name: 'prometheus'
+#     static_configs:
+#     - targets: ['prometheus:9090']
+  - job_name: 'dev.local'
+    static_configs:
+    - targets: ['dev.local:8080']
+  - job_name: 'consul'
+    consul_sd_configs:
+      - server: 'consul:8500'
+        services:
+          - stats-mcalc-metric
+    relabel_configs:
+      - source_labels: ['__meta_consul_dc']
+        regex:         '(.*)'
+        target_label:  'dc'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_node', '__meta_consul_service_port']
+        separator:     ':'
+        regex:         '(.*)'
+        target_label:  'instance'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_service']
+        regex:         '(.*)'
+        target_label:  'job'
+        replacement:   '$1'
+      - source_labels: ['__meta_consul_service_id']
+        regex:         '(.*)'
+        target_label:  'id'
+        replacement:   '$1'

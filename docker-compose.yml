@@ -1,0 +1,23 @@
+version: '2.2'
+services:
+  prometheus:
+    image: prom/prometheus:v2.5.0
+    restart: always
+    ports:
+    - "9090:9090"
+    extra_hosts:
+    - dev.local:${HOST_IP}
+    volumes:
+    - "./prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+  grafana:
+    image: grafana/grafana:5.3.4
+    restart: always
+    volumes:
+    - "./grafana:/var/lib/grafana"
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: secret
+    depends_on:
+      prometheus:
+        condition: service_started
