@@ -1,4 +1,4 @@
-version: '2.2'
+version: "2.2"
 services:
   prometheus:
     image: prom/prometheus:v2.13.0
@@ -16,6 +16,10 @@ services:
       DATA_SOURCE_NAME: "postgresql://postgres:postgres@localhost:5432/db_name?sslmode=disable"
     ports:
       - "127.0.0.1:9187:9187"
+    volumes:
+      - "${PWD}/development/custom_queries.yml:/config/queries.yml"
+    command:
+      - "--extend.query-path=/config/queries.yml"
     depends_on:
       prometheus:
         condition: service_started
