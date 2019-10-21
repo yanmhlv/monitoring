@@ -3,6 +3,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.13.0
     restart: always
+    restart: always
     ports:
       - "127.0.0.1:9090:9090"
     extra_hosts:
@@ -12,6 +13,7 @@ services:
       - "prometheus-data:/prometheus"
   postgres_exporter:
     image: wrouesnel/postgres_exporter:v0.5.1
+    restart: always
     environment:
       DATA_SOURCE_NAME: "postgresql://postgres:postgres@localhost:5432/db_name?sslmode=disable"
     ports:
@@ -27,6 +29,7 @@ services:
       #   condition: service_healthy
   cadvisor:
     image: google/cadvisor
+    restart: always
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -36,12 +39,14 @@ services:
   node-exporter:
     restart: always
     image: prom/node-exporter
+    restart: always
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
   grafana:
     image: grafana/grafana:6.4.2
+    restart: always
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
