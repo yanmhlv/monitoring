@@ -1,8 +1,7 @@
 version: "2.2"
 services:
   prometheus:
-    image: prom/prometheus:v2.13.0
-    restart: always
+    image: prom/prometheus:v2.16.0
     restart: always
     ports:
       - "127.0.0.1:9090:9090"
@@ -12,7 +11,7 @@ services:
       - "./development/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
       - "prometheus-data:/prometheus"
   postgres_exporter:
-    image: wrouesnel/postgres_exporter:v0.5.1
+    image: wrouesnel/postgres_exporter:v0.8.0
     restart: always
     environment:
       DATA_SOURCE_NAME: "postgresql://postgres:postgres@localhost:5432/db_name?sslmode=disable"
@@ -25,27 +24,8 @@ services:
     depends_on:
       prometheus:
         condition: service_started
-      # postgres:
-      #   condition: service_healthy
-  cadvisor:
-    image: google/cadvisor
-    restart: always
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    restart: always
-  node-exporter:
-    restart: always
-    image: prom/node-exporter
-    restart: always
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
   grafana:
-    image: grafana/grafana:6.4.2
+    image: grafana/grafana:6.6.2
     restart: always
     ports:
       - "127.0.0.1:3000:3000"
