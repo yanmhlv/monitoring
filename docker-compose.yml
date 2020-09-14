@@ -1,7 +1,7 @@
 version: "2.2"
 services:
   prometheus:
-    image: prom/prometheus:v2.20.1
+    image: prom/prometheus:v2.21.0
     restart: always
     ports:
       - "127.0.0.1:9090:9090"
