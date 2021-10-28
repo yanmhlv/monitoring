@@ -1,7 +1,7 @@
 version: "2.2"
 services:
   prometheus:
-    image: prom/prometheus:v2.30.0
+    image: prom/prometheus:v2.30.2
     restart: always
     mem_limit: 256m
     ports:
@@ -26,7 +26,7 @@ services:
     command:
       - "--extend.query-path=/config/queries.yml"
   grafana:
-    image: grafana/grafana:8.1.5
+    image: grafana/grafana:8.2.2
     restart: always
     mem_limit: 128m
     ports:
