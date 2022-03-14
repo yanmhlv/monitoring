@@ -12,7 +12,7 @@ services:
       - "./development/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
       - "prometheus-data:/prometheus"
   postgres_exporter:
-    image: wrouesnel/postgres_exporter:latest
+    image: quay.io/prometheuscommunity/postgres-exporter:v0.10.1
     restart: always
     mem_limit: 64m
     environment:
